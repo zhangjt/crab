@@ -1,7 +1,4 @@
-/**
- * @author liege
- * date:2014-6-10 18:10:42
- */
+
 //螃蟹类
 function Plane(){
 	this.plane = null;

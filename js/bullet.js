@@ -1,6 +1,4 @@
-/**
- * @author Administrator
- */
+
 //子弹类
 function Bullet(){
 	//子弹对象，速度，威力，方向，起点坐标，定时器
