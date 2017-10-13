@@ -17,6 +17,7 @@ var game = {
 game.initMyPlane = function(){
 	this.myPlane = new myPlane();
 	this.myPlane.class = "myPlane";
+	// this.myPlane.plane.setAttribute('id','myPlane');
 	this.myPlane.position = {x:"45%",y:'50%'};
 	this.myPlane.show();	  //显示我机
 	this.myPlane.move();      //开启鼠标移动
@@ -254,3 +255,4 @@ onload = function(){
 			return true;
 		}
 	}
+	

@@ -4,6 +4,10 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="format-detection" content="telephone=no">
+    <!-- UC强制全屏 -->
+	<meta name="full-screen" content="yes">
+	<!-- QQ强制全屏 -->
+	<meta name="x5-fullscreen" content="true">
 	<title>play Crab</title>
 	<link rel="stylesheet" href="css/view.css" />
 	<script src="js/plane.js"></script>
@@ -20,6 +24,7 @@
 			<input id="rest_btn" type="button" value="重新开始" />
 		</div>
 		<div id="score"></div>
+		
 	</div>
 </body>
 <script>
@@ -29,8 +34,11 @@
 	    //设置根字体大小
 	    var docEl = document.documentElement;
 	    docEl.style.fontSize = 20 * (docEl.clientWidth / 320) + 'px';
-	    console.log(docEl.style.fontSize);
+	    var container=document.getElementById('container');
+	    container.style.height=window.screen.height+'px';
+	   
 	};
+
 	document.addEventListener("DOMContentLoaded",function(){
 	    recalc();
 	},false)

@@ -1,4 +1,7 @@
-
+/**
+ * @author liege
+ * date:2014-6-10 18:10:42
+ */
 //螃蟹类
 function Plane(){
 	this.plane = null;
@@ -15,9 +18,6 @@ Plane.prototype.show = function(){
 	this.plane = document.createElement("p");
 	this.plane.score = 0;   //与npc.score即this.score不一样
 	this.plane.className = this.class;
-	if (this.class=="myPlane") {
-		this.plane.id=this.class;
-	};
 	document.getElementById("container").appendChild(this.plane);
 };
 //螃蟹爆炸
@@ -95,65 +95,31 @@ myPlane.prototype.move = function(state){
 	var _this = this;
 	_this.stage = document.getElementById("container");
 	 //螃蟹跟随鼠标移动
-	 
-	 //手势在页面滑动时禁止事件默认动作和事件传播
-	 document.body.addEventListener('touchmove', function(e) {
-	     e.stopPropagation();
-	     e.preventDefault();
-	 });
-	 //1.移动端上的鼠标移动跟随移动
-	_this.plane.addEventListener( 'touchmove',function(event){
-		 // event.stoppropagation();
-	     //如果这个元素的位置内只有一个手指的话
-	     if( event.targetTouches.length == 1 ){
-	            var touch = event.targetTouches[ 0 ];
-	            //把元素放在手指所在的位置
-				_this.position.x = touch.pageX- _this.stage.offsetLeft - _this.plane.offsetWidth/2;
-				_this.position.y = touch.pageY- _this.stage.offsetTop - _this.plane.offsetHeight/2;
-				_this.plane.style.left = _this.position.x + "px";
-				_this.plane.style.top = _this.position.y + "px";	
-				//螃蟹移动,离开舞台时的规避处理:上右下左	
-				if(_this.plane.offsetLeft>_this.stage.offsetWidth-_this.plane.offsetWidth){
-					_this.plane.style.left = _this.stage.offsetWidth-_this.plane.offsetWidth + "px";
-				}
-				if(_this.plane.offsetLeft<0){
-					_this.plane.style.left = 0;
-				}
-				if(_this.plane.offsetTop<0){
-					_this.plane.style.top = 0;
-				}
-				if(_this.plane.offsetTop>_this.stage.offsetHeight-_this.plane.offsetHeight){
-					_this.plane.style.top = _this.stage.offsetHeight-_this.plane.offsetHeight + "px";
-				}
-	      }
-	}, false );
-
-	//2.pc上的鼠标移动跟随移动
-	// _this.stage.onmouseover = function(e){
-	// 	_this.stage.onmousemove = function(e){
-	// 		var E = e||event;
-	// 		_this.position.x = E.clientX- _this.stage.offsetLeft - _this.plane.offsetWidth/2;
-	// 		_this.position.y = E.clientY- _this.stage.offsetTop - _this.plane.offsetHeight/2;
-	// 		_this.plane.style.left = _this.position.x + "px";
-	// 		_this.plane.style.top = _this.position.y + "px";	
-	// 		//螃蟹移动,离开舞台时的规避处理:上右下左	
-	// 		if(_this.plane.offsetLeft>_this.stage.offsetWidth-_this.plane.offsetWidth){
-	// 			_this.plane.style.left = _this.stage.offsetWidth-_this.plane.offsetWidth + "px";
-	// 		}
-	// 		if(_this.plane.offsetLeft<0){
-	// 			_this.plane.style.left = 0;
-	// 		}
-	// 		if(_this.plane.offsetTop<0){
-	// 			_this.plane.style.top = 0;
-	// 		}
-	// 		if(_this.plane.offsetTop>_this.stage.offsetHeight-_this.plane.offsetHeight){
-	// 			_this.plane.style.top = _this.stage.offsetHeight-_this.plane.offsetHeight + "px";
-	// 		}
-	// 	};
-	// 	_this.stage.onmouseout = function(){
-	// 		_this.stage.onmousemove = null;
-	// 	};
-	// };
+	_this.stage.onmouseover = function(e){
+		_this.stage.onmousemove = function(e){
+			var E = e||event;
+			_this.position.x = E.clientX- _this.stage.offsetLeft - _this.plane.offsetWidth/2;
+			_this.position.y = E.clientY- _this.stage.offsetTop - _this.plane.offsetHeight/2;
+			_this.plane.style.left = _this.position.x + "px";
+			_this.plane.style.top = _this.position.y + "px";	
+			//螃蟹移动,离开舞台时的规避处理:上右下左	
+			if(_this.plane.offsetLeft>_this.stage.offsetWidth-_this.plane.offsetWidth){
+				_this.plane.style.left = _this.stage.offsetWidth-_this.plane.offsetWidth + "px";
+			}
+			if(_this.plane.offsetLeft<0){
+				_this.plane.style.left = 0;
+			}
+			if(_this.plane.offsetTop<0){
+				_this.plane.style.top = 0;
+			}
+			if(_this.plane.offsetTop>_this.stage.offsetHeight-_this.plane.offsetHeight){
+				_this.plane.style.top = _this.stage.offsetHeight-_this.plane.offsetHeight + "px";
+			}
+		};
+		_this.stage.onmouseout = function(){
+			_this.stage.onmousemove = null;
+		};
+	};
 
 };
 //螃蟹停止跟随鼠标移动
