@@ -1,7 +1,7 @@
 var game = {
 	myPlane:null,
 	allPlane:[],                     //所有敌机
-	allBullet:[],					 //所有子弹对象(节点)												
+	allBullet:[],					 //所有子弹对象(节点)											
 	planeSpeed:[4,3,2,1],            //敌机速度
 	planeDensity:[20,200,600,1000],  //敌机密度
 	interval:1000/10,                //生产频率
@@ -59,6 +59,7 @@ game.run = function(){
 		this.allPlane.push(npc);
 	}
 	if(this.num%this.planeDensity[1] == 0){
+		this.myPlane.tipShow('2号敌机即将来袭');
 		var npc = new npcPlane();
 		npc.class = "npc2";	
 		npc.armor = npc.score = 5;
@@ -68,6 +69,7 @@ game.run = function(){
 		this.allPlane.push(npc);
 	}
 	if(this.num%this.planeDensity[2] == 0){
+		this.myPlane.tipShow('3号敌机即将来袭');
 		var npc = new npcPlane();
 		npc.class = "npc3";		
 		npc.armor = npc.score = 10;
@@ -77,6 +79,7 @@ game.run = function(){
 		this.allPlane.push(npc);		
 	}
 	if(this.num%this.planeDensity[3] == 0){
+		this.myPlane.tipShow('BOSS即将来袭');
 		var npc = new npcPlane();
 		npc.class = "npc4";		
 		npc.armor = npc.score = 20;
@@ -86,7 +89,27 @@ game.run = function(){
 		this.allPlane.push(npc);
 		this.num = 0;		
 	}	
+	// switch(this.num)
+	// {
+	// 	case 20000:
+	// 	    this.myPlane.tipShow('加速 LV: 2');
+	// 	    break;
+	// 	case 40:
+	// 	    this.myPlane.tipShow('加速 LV: 3');
+	// 	    break;
+	// 	case 80:
+	// 	    this.myPlane.tipShow('加速 LV: 4');
+	// 	    break;
+	// 	case 150:
+	// 	    this.myPlane.tipShow('加速 LV: 5');
+	// 	    break;
+	// 	case 300:
+	// 	    this.myPlane.tipShow('加速 LV: 6');
+	// 	    break;
 
+	// 	default:
+	//     	break;
+	// }
 	//获取、遍历所有敌机对象
 	var len = this.allPlane.length;
 	for(var i=0;i<len;i++){
@@ -105,6 +128,7 @@ game.run = function(){
 			len--;
 		}
 	}
+
 	//敌机移动
 	for(var i=0;i<this.allPlane.length;i++){
 		this.allPlane[i].plane.style.top = this.allPlane[i].plane.offsetTop + this.allPlane[i].speed + "px";
@@ -144,30 +168,51 @@ game.run = function(){
 		}
 	}		
 	//记分板
-	document.getElementById("score").innerHTML = "得分：" + this.scores*100;
+	document.getElementById("score").innerHTML = "<font>得分：</font>" + this.scores*100;
 	//背景运动(背景样式background:url() repeat-y)
 	this.stageBgY++;
 	this.stage.style.backgroundPositionY = this.stageBgY + "px";
 	//游戏进度
+
 	if(this.scores>20 && this.scores<40){
 		this.planeSpeed = [5,4,3,2];              //敌机飞下来的速度
 		this.planeDensity = [15,200,600,1000];    //敌机生产的频率
+		if(this.myPlane.isShowTip==0){
+			 this.myPlane.tipShow('加速 LV: 2');
+			 this.myPlane.isShowTip++;
+		}
 	}
 	if(this.scores>40 && this.scores<80){
 		this.planeSpeed = [6,5,4,3];
 		this.planeDensity = [15,100,400,2000];
+		if(this.myPlane.isShowTip==1){
+			 this.myPlane.tipShow('加速 LV: 3');
+			 this.myPlane.isShowTip++;
+		}
 	}
 	if(this.scores>80 && this.scores<100){
 		this.planeSpeed = [7,6,5,4];
 		this.planeDensity = [10,200,500,1500];
+		if(this.myPlane.isShowTip==2){
+			 this.myPlane.tipShow('加速 LV: 4');
+			 this.myPlane.isShowTip++;
+		}
 	}
 	if(this.scores>150){
 		this.planeSpeed = [10,8,6,5];
 		this.planeDensity = [10,150,300,1000];
+		if(this.myPlane.isShowTip==3){
+			 this.myPlane.tipShow('加速 LV: 5');
+			 this.myPlane.isShowTip++;
+		}
 	}
 	if(this.scores>300){
 		this.planeSpeed = [12,10,8,4];
 		this.planeDensity = [8,100,200,800];
+		if(this.myPlane.isShowTip==4){
+			 this.myPlane.tipShow('加速 LV: 6');
+			 this.myPlane.isShowTip++;
+		}
 	}	
 };
 //游戏开始，初始化我机，场景运动开始

@@ -9,6 +9,9 @@ function Plane(){
 	this.direction = "up";
 	this.bullets = null;
 	this.lv = 1;
+	this.isShowTip=0;
+	
+	
 }
 //显示螃蟹(创建新螃蟹节点)
 Plane.prototype.show = function(){
@@ -54,6 +57,20 @@ Plane.prototype.die = function(){
 	}
 	this.outside = true;		
 };
+//出现新类型敌机提示语
+Plane.prototype.tipShow=function(html){
+	var tip=document.createElement('p');
+	var no=Math.ceil(Math.random()*1000);
+	tip.className="tip flash tip"+no;
+	// tip.setAttribute('rel','1');
+	tip.innerHTML=html+'';
+	document.getElementById("tipMess").appendChild(tip);	
+	//0.3秒后移除爆炸动画
+	var timer = window.setTimeout(function(){		
+			document.getElementById('tipMess').removeChild(tip);
+	},1500);
+	window.setTimeout(timer);
+}
 //我机螃蟹
 function myPlane(){}
 myPlane.prototype = new Plane();
@@ -68,13 +85,13 @@ myPlane.prototype.fire = function(){
 	}
 	if(this.lv == 2){
 		this.position = {
-			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 16,
+			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 10,
 			y:this.plane.offsetTop + 20
 		};
 	}	
 	if(this.lv == 3){
 		this.position = {
-			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 33,
+			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 25,
 			y:this.plane.offsetTop
 		};
 	}	

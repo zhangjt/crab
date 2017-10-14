@@ -15,9 +15,11 @@ function Bullet(){
 }
 //子弹销毁
 Bullet.prototype.die = function(){
-
-	document.getElementById("container").removeChild(this.bullet);
-	this.outside = true;	
+	if (this.bullet) {
+		document.getElementById("container").removeChild(this.bullet);
+		this.outside = true;
+	}
+		
 };
 //子弹发射(创建/添加子弹节点<i>)
 Bullet.prototype.fire = function(){
