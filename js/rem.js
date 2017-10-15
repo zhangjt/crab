@@ -76,6 +76,10 @@ var autoPlayMusic=function(url){
  	audio.addEventListener("canplaythrough", function(){
  		// alert("canplaythrough");
  	 	document.body.appendChild(musicDiv);
+ 	 	if (first) {
+ 	 		var result=confirmWindow('是否开启音乐⊙▽⊙',0);
+ 	 		first=false;
+ 	 	}
  	 	this.volume = 1;
  	 	if (isPlay) {
  	 		this.play();
@@ -86,6 +90,7 @@ var autoPlayMusic=function(url){
 
  	document.addEventListener("WeixinJSBridgeReady", function () {
  		// alert("WeixinJSBridgeReady");
+ 		
  		if (isPlay) {
  			audio.play();
  		}
@@ -102,12 +107,7 @@ var autoPlayMusic=function(url){
 	     }
 
 	});
- 	var begin_btn = document.getElementById("begin_btn");
- 	begin_btn.style.display='none';
- 	if (first) {
- 		var result=confirmWindow('是否开启音乐⊙▽⊙',0);
- 		first=false;
- 	}
+
 }
 
 document.addEventListener("DOMContentLoaded", function() {
