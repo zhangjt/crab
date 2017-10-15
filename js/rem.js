@@ -105,7 +105,7 @@ var autoPlayMusic=function(url){
  	var begin_btn = document.getElementById("begin_btn");
  	begin_btn.style.display='none';
  	if (first) {
- 		var result=confirmWindow('是否开启音乐',0);
+ 		var result=confirmWindow('是否开启音乐⊙▽⊙',0);
  		first=false;
  	}
 }
