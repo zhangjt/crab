@@ -224,7 +224,8 @@ game.over = function() {
     this.myPlane.bang();
     //切换gameover音乐
     var music = document.getElementById('music'),
-        audio = document.getElementById('audio');
+        audio = document.getElementById('audio'),
+        audio2 = document.getElementById('audio2');
     if (music) {
         audio.pause();
         music.parentNode.removeChild(music);
@@ -234,12 +235,15 @@ game.over = function() {
     win.addEventListener('click', function() {
         this.parentNode.removeChild(this);
 
-        autoPlayMusic('game_over.wav');
+        // autoPlayMusic('game_over.wav');
+        if (isPlay) {
+        	audio2.play();
+        	audio2.parentNode.style.display='block';
+        }
+        
         window.setTimeout(timer);
         var timer = window.setTimeout(function() {
-
-            var music2 = document.getElementById('music');
-            music2.parentNode.removeChild(music2);
+            audio2.parentNode.parentNode.removeChild(audio2.parentNode);
         }, 3500);
 
         window.clearInterval(_this.gameSet);

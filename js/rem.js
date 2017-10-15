@@ -52,11 +52,10 @@ var addJweixin=function(callback){
 		}
 	}
 }
-var first=true;  //第一次执行true,之后不执行;
-
+var first=true;  //第一次执行true,之后不执行
 //微信下自动播放音乐
 var autoPlayMusic=function(url){
-
+	loaded=false;
  	var musicDiv=document.createElement('div'),
  		audio=document.createElement('audio');
  	musicDiv.className=musicDiv.id="music";
@@ -75,6 +74,7 @@ var autoPlayMusic=function(url){
  	//监听(canplaythrough)audio加载完成后显示.ps:video|audio用onload无效
  	audio.addEventListener("canplaythrough", function(){
  		// alert("canplaythrough");
+
  	 	document.body.appendChild(musicDiv);
  	 	if (first) {
  	 		var result=confirmWindow('是否开启音乐⊙▽⊙',0);
@@ -90,7 +90,6 @@ var autoPlayMusic=function(url){
 
  	document.addEventListener("WeixinJSBridgeReady", function () {
  		// alert("WeixinJSBridgeReady");
- 		
  		if (isPlay) {
  			audio.play();
  		}
