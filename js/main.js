@@ -89,27 +89,7 @@ game.run = function(){
 		this.allPlane.push(npc);
 		this.num = 0;		
 	}	
-	// switch(this.num)
-	// {
-	// 	case 20000:
-	// 	    this.myPlane.tipShow('加速 LV: 2');
-	// 	    break;
-	// 	case 40:
-	// 	    this.myPlane.tipShow('加速 LV: 3');
-	// 	    break;
-	// 	case 80:
-	// 	    this.myPlane.tipShow('加速 LV: 4');
-	// 	    break;
-	// 	case 150:
-	// 	    this.myPlane.tipShow('加速 LV: 5');
-	// 	    break;
-	// 	case 300:
-	// 	    this.myPlane.tipShow('加速 LV: 6');
-	// 	    break;
-
-	// 	default:
-	//     	break;
-	// }
+	
 	//获取、遍历所有敌机对象
 	var len = this.allPlane.length;
 	for(var i=0;i<len;i++){
@@ -229,28 +209,56 @@ game.begin = function(){
 };
 //游戏暂停
 game.pause = function(){
+	var beginBtn=document.getElementById('begin');
 	
-	this.myPlane.stop();   //停止跟随鼠标移动
-	window.clearInterval(this.gameSet);   //停止一切运动
+	if (this.myPlane) {
+		this.myPlane.stop();   //停止跟随鼠标移动
+		window.clearInterval(this.gameSet);   //停止一切运动
+	}
+
 };
 //游戏结束
-game.over = function(){
-	var _this=this;
-	this.myPlane.stop();
-	this.myPlane.bang();
-	window.clearInterval(this.gameSet);   
-	//得分统计
-	window.setTimeout(function(){
-		window.clearInterval(this.gameSet);
-		var info = document.getElementById("info"),
-			endScroe = document.getElementById("endScroe");
-		info.style.display = "block";
-		endScroe.innerHTML = _this.scores*100;
-	},1500);
+game.over = function() {
+    var _this = this;
+    this.myPlane.stop();
+    this.myPlane.bang();
+    //切换gameover音乐
+    var music = document.getElementById('music'),
+        audio = document.getElementById('audio');
+    if (music) {
+        audio.pause();
+        music.parentNode.removeChild(music);
+    }
+    var win=confirmWindow('Game Over !',1);
+
+    win.addEventListener('click', function() {
+        this.parentNode.removeChild(this);
+
+        autoPlayMusic('game_over.wav');
+        window.setTimeout(timer);
+        var timer = window.setTimeout(function() {
+
+            var music2 = document.getElementById('music');
+            music2.parentNode.removeChild(music2);
+        }, 3500);
+
+        window.clearInterval(_this.gameSet);
+        //得分统计
+        window.setTimeout(function() {
+            window.clearInterval(_this.gameSet);
+            var info = document.getElementById("info"),
+                endScroe = document.getElementById("endScroe");
+            info.style.display = "block";
+            endScroe.innerHTML = _this.scores * 100;
+        }, 1500);
+
+    }, false); 
+
 };
 //文件载入
 onload = function(){
 	var begin_btn = document.getElementById("begin_btn"),
+		begin = document.getElementById("begin"),
 		goon_btn = document.getElementById("goon_btn"),
 		rest_btn = document.getElementById("rest_btn"),
 		stage = document.getElementById("container");
@@ -264,6 +272,7 @@ onload = function(){
 
 	stage.onclick = function(e){
 		var E = e||event;
+		if (!game.myPlane) {return};
 		goon_btn.parentNode.style.display = "block";
 		game.pause();
 		E.stopPropagation();
@@ -283,21 +292,67 @@ onload = function(){
 	
 };
 
-	//碰撞检测
-	function getCollision(obj1,obj2){
-		// obj1:我机;obj2:敌机
-		var l1 = obj1.offsetLeft;
-		var r1 = obj1.offsetLeft + obj1.offsetWidth;
-		var t1 = obj1.offsetTop;
-		var b1 = obj1.offsetTop+ obj1.offsetHeight;
-		var l2 = obj2.offsetLeft;
-		var r2 = obj2.offsetLeft + obj2.offsetWidth;
-		var t2 = obj2.offsetTop;
-		var b2 = obj2.offsetTop+ obj2.offsetHeight;				
-		if(r1<l2 || l1>r2 || t1>b2 || b1<t2){
-			return false;
-		}else{
-			return true;
-		}
+//碰撞检测
+function getCollision(obj1,obj2){
+	// obj1:我机;obj2:敌机
+	var l1 = obj1.offsetLeft;
+	var r1 = obj1.offsetLeft + obj1.offsetWidth;
+	var t1 = obj1.offsetTop;
+	var b1 = obj1.offsetTop+ obj1.offsetHeight;
+	var l2 = obj2.offsetLeft;
+	var r2 = obj2.offsetLeft + obj2.offsetWidth;
+	var t2 = obj2.offsetTop;
+	var b2 = obj2.offsetTop+ obj2.offsetHeight;				
+	if(r1<l2 || l1>r2 || t1>b2 || b1<t2){
+		return false;
+	}else{
+		return true;
 	}
+}
+//确认窗口
+function confirmWindow(label,isok){
+	if (isok==1) {
+		var p = document.createElement('p');
+		p.className = 'confirmWindow';
+		p.innerHTML = '<div class="question">'+label+'</div><p>确定</p>';
+		document.body.appendChild(p);
+
+	}else if(isok==0){
+		var p=document.createElement('p'),
+			yes=document.createElement('div'),
+			no=document.createElement('div');
+		p.className=p.id='confirmWindow';
+		yes.className=no.className='sure';
+		no.classList.add('no');
+		p.innerHTML = '<div class="question">'+label+'</div>';
+		yes.innerHTML = '好啊';
+		no.innerHTML = '不了';
+		yes.setAttribute('onclick','isOpenMusic("yes")');
+		no.setAttribute('onclick','isOpenMusic("no")');
+		p.appendChild(yes);
+		p.appendChild(no);
+		document.body.appendChild(p);
+	}
+	return p;
 	
+}
+//打开游戏页面后,确认是否开启音乐模式
+var isPlay=true;     //用户选择是否开启音乐;
+function isOpenMusic(rel){
+	var audio=document.getElementById("audio"),
+		confirmWindow=document.getElementById("confirmWindow");
+	if (rel=='yes') {
+		audio.play();
+		audio.parentNode.classList.add('rotate');
+		isPlay=true; 
+	}else if(rel=='no'){
+		audio.pause();
+		audio.parentNode.classList.remove('rotate');
+		isPlay=false; 
+
+	}	
+	confirmWindow.parentNode.removeChild(confirmWindow);
+	var begin_btn = document.getElementById("begin_btn");
+	begin_btn.style.display='block';
+}
+

@@ -16,20 +16,15 @@ body{background: #F7B7C4;font: normal normal 16px/30px arial,"微软雅黑";over
 .bang2{background:url(../img/plane2.gif);  background-size:100% 100%;background-size:100% 100%;}
 .bang3{background:url(../img/plane3.gif);  background-size:100% 100%;background-size:100% 100%;background-size:100% 100%;}
 .bang4{background:url(../img/plane4.gif); background-size:100% 100%;}
-
 #score {
     position: absolute;
     left: 0;
     top: 0;
     padding: 0 0.6rem;
     background: rgba(255, 255, 255, 0.3);
-    border-radius: 0.4rem;
     width:100%;
     text-align:left;
     color:#fff;
-}
-#socre font{
-    font-size:0.05rem;
 }
 
 #tipMess {
@@ -38,8 +33,6 @@ body{background: #F7B7C4;font: normal normal 16px/30px arial,"微软雅黑";over
     top: 1.4rem;
     width: 100%;
 }
-
-
 #container input{
 	background: none;
     border: 0.1rem solid #fff;
@@ -47,8 +40,11 @@ body{background: #F7B7C4;font: normal normal 16px/30px arial,"微软雅黑";over
     border-radius: 1rem;
     padding: 0.4rem 2rem;
     outline: none;
-    margin-top: 100%;
+    margin-top: 16rem;
+    margin-left:5rem;
     font-size: 0.7rem;
+    display: block;
+
 }
 #begin{ position: absolute; background: url(../img/begin.png) no-repeat center center; width: 100%; height: 100%; z-index: 999;}
 #goon{	width: 100%; height: 100%; z-index: 99; position: relative; text-align: center; display: none;}
@@ -57,7 +53,7 @@ margin: 66% auto 0;
 position: relative; z-index: 99;
 }
 #endScroe{ height:48%; line-height: 400%; border:1px solid #fff; border-width: 1px 0; font-weight: bold;}
-#container #rest_btn{ margin-top:0 ; border:0;}
+#container #rest_btn{ margin-top:0 ; margin-left:0;border:0;}
 .tip{
     width: 100%;
     height: auto;
@@ -78,4 +74,54 @@ position: relative; z-index: 99;
 .flash{
     animation: flash 1.5s linear;
     -webkit-animation-name:flash 1.5s linear;
+}
+/*musicBtn*/
+.music{
+    position: absolute;
+    right: 0.4rem;
+    top: 0.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    z-index: 10000;
+    background: url(../img/music.png) no-repeat;
+    background-size: 100% 100%;
+
+}
+.rotate{
+    animation:rotate 1.3s linear 0s infinite;
+}
+@keyframes rotate{
+    0%{transform: rotateZ(0deg);}
+    100%{transform: rotateZ(360deg);}
+}
+@-webkit-keyframes rotate{
+    0%{transform: rotateZ(0deg);}
+    100%{transform: rotateZ(360deg);}
+}
+.confirmWindow {
+    width: 50%;
+    height: auto;
+    background: rgba(255, 255, 255, .3);
+    text-align: center;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 999999;
+    top: 16rem;
+    left: 25%;
+    overflow: hidden;
+}
+.confirmWindow .question{
+    text-align:center;
+    border-bottom:1px solid #fff;
+}
+.confirmWindow .sure{
+    float:left;
+    text-align:center;
+    background: #fff;
+    padding:0.1rem;
+    width:47%;
+}
+.confirmWindow .no{
+    background: none;
 }

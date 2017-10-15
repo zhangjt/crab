@@ -79,7 +79,7 @@ myPlane.prototype.fire = function(){
 	//1.设置初始this.lv的三种子弹的位置
 	if(this.lv == 1){
 		this.position = {
-			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 2,
+			x:this.plane.offsetLeft + this.plane.offsetWidth/2 - 4,
 			y:this.plane.offsetTop + 40
 		};
 	}
@@ -113,11 +113,6 @@ myPlane.prototype.move = function(state){
 	_this.stage = document.getElementById("container");
 	 //螃蟹跟随鼠标移动
 	 
-	 //手势在页面滑动时禁止事件默认动作和事件传播
-	 document.body.addEventListener('touchmove', function(e) {
-	     e.stopPropagation();
-	     e.preventDefault();
-	 });
 	 //1.移动端上的鼠标移动跟随移动
 	_this.plane.addEventListener( 'touchmove',function(event){
 		 // event.stoppropagation();
