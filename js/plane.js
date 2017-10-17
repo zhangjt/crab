@@ -115,7 +115,7 @@ myPlane.prototype.move = function(state){
 	 
 	 //1.移动端上的鼠标移动跟随移动
 	_this.plane.addEventListener( 'touchmove',function(event){
-		 event.stopPropagation();
+		 // event.stopPropagation();
 	     //如果这个元素的位置内只有一个手指的话
 	     if( event.targetTouches.length == 1 ){
 	            var touch = event.targetTouches[ 0 ];
