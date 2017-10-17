@@ -72,32 +72,19 @@ var autoPlayMusic=function(url){
  	audio.load();//ios需要,不然'canplaythrough'事件不触发;直接play也不让播放
 
  	//监听(canplaythrough)audio加载完成后显示.ps:video|audio用onload无效
-    if (typeof(oncanplaythrough)!='undefined') {
-        audio.addEventListener("canplaythrough", function(){
-            // alert("canplaythrough");
-            document.body.appendChild(musicDiv);
-            if (first) {
-                var result=confirmWindow('是否开启音乐⊙▽⊙',0);
-                first=false;
-            }
-            this.volume = 1;
-            if (isPlay) {
-                this.play();
-            }   
-        },false)
-    }else{
-        alert('canplaythrough不存在啊')
-        document.body.appendChild(musicDiv);
-        if (first) {
-            var result=confirmWindow('是否开启音乐⊙▽⊙',0);
-            first=false;
-        }
-        this.volume = 1;
-        if (isPlay) {
-            this.play();
-        }
-    }
+ 	audio.addEventListener("canplaythrough", function(){
+ 		// alert("canplaythrough");
 
+ 	 	document.body.appendChild(musicDiv);
+ 	 	if (first) {
+ 	 		var result=confirmWindow('是否开启音乐⊙▽⊙',0);
+ 	 		first=false;
+ 	 	}
+ 	 	this.volume = 1;
+ 	 	if (isPlay) {
+ 	 		this.play();
+ 	 	}	
+ 	},false)
 
  	audio.volume = 0.5;
 
